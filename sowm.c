@@ -195,6 +195,19 @@ void ws_go(const Arg arg) {
     if (list) win_focus(list); else cur = 0;
 }
 
+void kill_wm()
+{
+  XNextEvent(dpy,&ev);
+  std::vector<Window> list;
+  ListWindow(list);
+  for(Window w : list)
+  {
+    XSetWindowBorder(dpy, w, BlackPixel(dpy, DefaultScreen(dpy))); 
+    XSetWindowBorderWidth(dpy, w, 1);
+  }
+   exit(0);
+}
+
 void configure_request(XEvent *e) {
     XConfigureRequestEvent *ev = &e->xconfigurerequest;
 
