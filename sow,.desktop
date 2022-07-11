@@ -1,0 +1,5 @@
+[Desktop Entry]
+Name=sowm
+Comment=This is the sowm window manager
+Exec=sowm
+Type=Application
