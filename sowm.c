@@ -195,17 +195,24 @@ void ws_go(const Arg arg) {
     if (list) win_focus(list); else cur = 0;
 }
 
-void kill_wm()
-{
-  XNextEvent(dpy,&ev);
-  std::vector<Window> list;
-  ListWindow(list);
-  for(Window w : list)
-  {
-    XSetWindowBorder(dpy, w, BlackPixel(dpy, DefaultScreen(dpy))); 
-    XSetWindowBorderWidth(dpy, w, 1);
-  }
-   exit(0);
+/*
+ void kill_wm(const Arg arg) {
+    exit(0);
+}
+*/
+
+// Written by phind (Not Tested)
+void kill_wm(const Arg arg) {
+    client *c;
+
+    // Iterate over all windows
+    for (c = list; c; c = c->next) {
+        // Close the window
+        XKillClient(d, c->w);
+    }
+
+    // Exit the program
+    exit(0);
 }
 
 void configure_request(XEvent *e) {
@@ -252,6 +259,11 @@ void run(const Arg arg) {
     execvp((char*)arg.com[0], (char**)arg.com);
 }
 
+void runAutoStart(void) {
+    system("cd ~/.config/sowm; ./autostart_blocking.sh");
+    system("cd ~/.config/sowm; ./autostart.sh &");
+}
+
 void input_grab(Window root) {
     unsigned int i, j, modifiers[] = {0, LockMask, numlock, numlock|LockMask};
     XModifierKeymap *modmap = XGetModifierMapping(d);
@@ -296,6 +308,7 @@ int main(void) {
     XSelectInput(d,  root, SubstructureRedirectMask);
     XDefineCursor(d, root, XCreateFontCursor(d, 68));
     input_grab(root);
+    runAutoStart();
 
     while (1 && !XNextEvent(d, &ev)) // 1 && will forever be here.
         if (events[ev.type]) events[ev.type](&ev);

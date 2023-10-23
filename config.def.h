@@ -3,28 +3,27 @@
 
 #define MOD Mod4Mask
 
-const char* menu[]    = {"rofi", "-show", "run",               0};
-const char* term[]    = {"alacrity",                           0};
-// const char* kill[]    = {"killall", "sowm",                    0};
-const char* briup[]   = {"brightness", "--inc",                0};
-const char* bridown[] = {"brightness", "--dec",                0};
-const char* voldown[] = {"amixer", "sset", "Master", "2%-",    0};
-const char* volup[]   = {"amixer", "sset", "Master", "2%+",    0};
-const char* volmute[] = {"amixer", "sset", "Master", "toggle", 0};
-const char* wall[]    = {"nitrogen", 0};
+const char* menu[]    = {"dmenu_run",      0};
+const char* term[]    = {"st",             0};
+const char* scrot[]   = {"scr",            0};
+const char* briup[]   = {"bri", "10", "+", 0};
+const char* bridown[] = {"bri", "10", "-", 0};
+const char* voldown[] = {"amixer", "sset", "Master", "5%-",         0};
+const char* volup[]   = {"amixer", "sset", "Master", "5%+",         0};
+const char* volmute[] = {"amixer", "sset", "Master", "toggle",      0};
+const char* colors[]  = {"bud", "/home/goldie/Pictures/Wallpapers", 0};
 
 static struct key keys[] = {
-    {MOD,      XK_c,   win_kill,   {0}},
-    {MOD,      XK_e,   win_center, {0}},
+    {MOD,      XK_q,   win_kill,   {0}},
+    {MOD,      XK_c,   win_center, {0}},
     {MOD,      XK_f,   win_fs,     {0}},
-    {MOD,      XK_q,   kill_wm,    {0}},
 
     {Mod1Mask,           XK_Tab, win_next,   {0}},
     {Mod1Mask|ShiftMask, XK_Tab, win_prev,   {0}},
 
-    {MOD,            run, {.com = menu}},
-    {MOD, XK_w,      run, {.com = wall}},
-//    {MOD, XK_q,      run, {.com = kill}},
+    {MOD, XK_d,      run, {.com = menu}},
+    {MOD, XK_w,      run, {.com = colors}},
+    {MOD, XK_p,      run, {.com = scrot}},
     {MOD, XK_Return, run, {.com = term}},
 
     {0,   XF86XK_AudioLowerVolume,  run, {.com = voldown}},
